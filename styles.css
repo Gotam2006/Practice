@@ -1,51 +1,33 @@
 :root {
   --clock-size: 320px;
-  --bg-light: #f9fafb;
-  --bg-dark: #1e293b;
-  --clock-bg-light: #ffffff;
-  --clock-bg-dark: #111827;
-  --clock-shadow-light: rgba(0, 0, 0, 0.1);
-  --clock-shadow-dark: rgba(0, 0, 0, 0.7);
-  --hand-hour-color-light: #3730a3;
-  --hand-minute-color-light: #4f46e5;
-  --hand-second-color-light: #ef4444;
-  --hand-hour-color-dark: #818cf8;
-  --hand-minute-color-dark: #a5b4fc;
-  --hand-second-color-dark: #f87171;
-  --number-color-light: #1f2937;
-  --number-color-dark: #d1d5db;
   --font-primary: 'Inter', sans-serif;
 }
 
 body {
   margin: 0;
   height: 100vh;
-  background-color: var(--bg-light);
+  font-family: var(--font-primary);
+  user-select: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: var(--font-primary);
-  transition: background-color 0.4s ease;
-  user-select: none;
+  flex-direction: column;
+  transition: background 0.5s;
 }
 
-body.dark {
-  background-color: var(--bg-dark);
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 .clock {
   position: relative;
   width: var(--clock-size);
   height: var(--clock-size);
-  background-color: var(--clock-bg-light);
   border-radius: 50%;
-  box-shadow: 0 10px 30px var(--clock-shadow-light), inset 0 0 60px rgba(0,0,0,0.08);
-  transition: background-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-body.dark .clock {
-  background-color: var(--clock-bg-dark);
-  box-shadow: 0 10px 30px var(--clock-shadow-dark), inset 0 0 60px rgba(255,255,255,0.1);
+  transition: background 0.4s, box-shadow 0.4s;
 }
 
 .numbers {
@@ -59,7 +41,6 @@ body.dark .clock {
   position: absolute;
   width: 28px;
   height: 28px;
-  color: var(--number-color-light);
   font-weight: 700;
   font-size: 1.2rem;
   display: flex;
@@ -69,25 +50,15 @@ body.dark .clock {
   transition: color 0.4s ease;
 }
 
-body.dark .number {
-  color: var(--number-color-dark);
-}
-
 .center {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 20px;
   height: 20px;
-  background-color: var(--hand-hour-color-light);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  transition: background-color 0.4s ease;
-}
-
-body.dark .center {
-  background-color: var(--hand-hour-color-dark);
 }
 
 .hand {
@@ -103,37 +74,103 @@ body.dark .center {
 .hand.hour {
   width: 8px;
   height: 80px;
-  background-color: var(--hand-hour-color-light);
   z-index: 6;
-}
-
-body.dark .hand.hour {
-  background-color: var(--hand-hour-color-dark);
 }
 
 .hand.minute {
   width: 6px;
   height: 110px;
-  background-color: var(--hand-minute-color-light);
   z-index: 7;
-}
-
-body.dark .hand.minute {
-  background-color: var(--hand-minute-color-dark);
 }
 
 .hand.second {
   width: 3px;
   height: 130px;
-  background-color: var(--hand-second-color-light);
-  z-index: 8;
   border-radius: 2px;
+  z-index: 8;
 }
 
-body.dark .hand.second {
-  background-color: var(--hand-second-color-dark);
+.digital {
+  font-size: 2rem;
+  font-weight: bold;
+  transition: color 0.4s ease;
 }
 
+.controls {
+  margin-top: 1rem;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #4f46e5;
+  color: white;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #3730a3;
+}
+
+.minimized {
+  display: none;
+}
+
+/* ===== ТЕМИ ===== */
+body.theme-light {
+  background: #f9fafb;
+}
+
+.theme-light .clock {
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.theme-light .number { color: #1f2937; }
+.theme-light .digital { color: #1f2937; }
+.theme-light .hand.hour { background: #3730a3; }
+.theme-light .hand.minute { background: #4f46e5; }
+.theme-light .hand.second { background: #ef4444; }
+.theme-light .center { background: #3730a3; }
+
+body.theme-dark {
+  background: #1e293b;
+}
+
+.theme-dark .clock {
+  background: #111827;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
+
+.theme-dark .number { color: #d1d5db; }
+.theme-dark .digital { color: #d1d5db; }
+.theme-dark .hand.hour { background: #818cf8; }
+.theme-dark .hand.minute { background: #a5b4fc; }
+.theme-dark .hand.second { background: #f87171; }
+.theme-dark .center { background: #818cf8; }
+
+body.theme-blue {
+  background: #e0f2fe;
+}
+
+.theme-blue .clock {
+  background: #bae6fd;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.theme-blue .number { color: #0c4a6e; }
+.theme-blue .digital { color: #0c4a6e; }
+.theme-blue .hand.hour { background: #0369a1; }
+.theme-blue .hand.minute { background: #0284c7; }
+.theme-blue .hand.second { background: #0ea5e9; }
+.theme-blue .center { background: #0369a1; }
+
+/* Адаптивність */
 @media (max-width: 400px) {
   :root {
     --clock-size: 260px;
